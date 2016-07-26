@@ -12,6 +12,11 @@ const removeHTMLTag = function (str) {
     return str;
 };
 
+app.get('/', function (req, res) {
+    res.status(200).json({ msg: 'hello nodejs' })
+});
+
+
 app.get('/*', function (req, res, next) {
     let competition = {
         'china': '?competition=51',
@@ -86,6 +91,6 @@ app.get('/*', function (req, res, next) {
 
 
 
-app.listen(3000, function (req, res) {
+app.listen(80, function (req, res) {
     console.log('app is running at port 3000');
 });
