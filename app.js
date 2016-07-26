@@ -74,10 +74,16 @@ app.get('/*', function (req, res, next) {
                 default:
                     console.error('一个神奇的错误');
             }
+
             items.splice(0, 1);
-            res.send(items);
+            if (items.toString()!==''){
+                res.status(200).json({ code: 200,data:items })
+            }else {
+                res.status(200).json({ error: '没有数据' })
+            }
         });
 });
+
 
 
 app.listen(3000, function (req, res) {
