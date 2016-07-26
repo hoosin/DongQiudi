@@ -74,7 +74,7 @@ app.get('/*', function (req, res, next) {
                 default:
                     console.error('一个神奇的错误');
             }
-            items.splice(0, 2);
+            items.splice(0, 1);
             res.send(items);
         });
 });
