@@ -14,7 +14,7 @@ const removeHTMLTag = function (str) {
 
 app.get('/*', function (req, res, next) {
     let competition = {
-        'china': '',
+        'china': '?competition=51',
         'chinasub': '?competition=148',
         'english': '?competition=8',
         'dermany': '?competition=9',
@@ -24,27 +24,57 @@ app.get('/*', function (req, res, next) {
     let key = req.params['0'];
     let team = key.split('/')[1];
     let type = key.split('/')[0];
-    console.log(`http://www.dongqiudi.com/data${competition[team]}&type=${type === 'mvp' ? 'goal_rank' : 'team_rank'}`)
-    superagent.get(`http://www.dongqiudi.com/data${competition[team]}&type=${type === 'mvp' ? 'goal_rank' : 'team_rank'}`)
+    let _type = (type==='mvp')?'goal_rank':(type==='rank')?'team_rank':(type==='attack')?'assist_rank':'';
+    console.info(`http://www.dongqiudi.com/data${competition[team]}&type=${_type}`);
+    superagent.get(`http://www.dongqiudi.com/data${competition[team]}&type=${_type}`)
         .set('Content-Type', 'application/json')
         .end(function (err, sres) {
             // 常规的错误处理
             if (err) {
                 return next(err);
             }
-            var $ = cheerio.load(sres.text);
-            var items = [];
-            $('#stat_detail tr').each(function (index, element) {
-                var $element = $(element);
-                items.push({
-                    team: escaper.unescape(removeHTMLTag($element.find('.team').html())),
-                    rank: escaper.unescape(removeHTMLTag($element.find('.rank').html())),
-                    mvp: escaper.unescape(removeHTMLTag($element.find('.player').html())),
-                    stat: escaper.unescape(removeHTMLTag($element.find('.stat').html())),
-                    img: $element.find('img').attr('src')
-                });
-            });
-            items.splice(0, 1);
+            let $ = cheerio.load(sres.text);
+            let items = [];
+            console.log(type);
+            switch (type){
+                case 'rank':
+                    $('#stat_detail tr .team').each(function (index, element) {
+                        var $element = $(element);
+                        items.push({
+                            team: escaper.unescape(removeHTMLTag($element.html())),
+                            img: $element.find('img').attr('src'),
+                            rank:index
+                        });
+                    });
+                    break;
+                case 'mvp':
+                    $('#stat_detail tr').each(function (index, element) {
+                        var $element = $(element);
+                        items.push({
+                            team: escaper.unescape(removeHTMLTag($element.find('.team').html())),
+                            rank: escaper.unescape(removeHTMLTag($element.find('.rank').html())),
+                            mvp: escaper.unescape(removeHTMLTag($element.find('.player').html())),
+                            stat: escaper.unescape(removeHTMLTag($element.find('.stat').html())),
+                            img: $element.find('img').attr('src')
+                        });
+                    });
+                    break;
+                case 'attack':
+                    $('#stat_detail tr').each(function (index, element) {
+                        var $element = $(element);
+                        items.push({
+                            team: escaper.unescape(removeHTMLTag($element.find('.team').html())),
+                            rank: escaper.unescape(removeHTMLTag($element.find('.rank').html())),
+                            mvp: escaper.unescape(removeHTMLTag($element.find('.player').html())),
+                            stat: escaper.unescape(removeHTMLTag($element.find('.stat').html())),
+                            img: $element.find('img').attr('src')
+                        });
+                    });
+                    break;
+                default:
+                    console.error('一个神奇的错误');
+            }
+            items.splice(0, 2);
             res.send(items);
         });
 });
