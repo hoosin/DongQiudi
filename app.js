@@ -12,15 +12,20 @@ const removeHTMLTag = function (str) {
     return str;
 };
 
-app.get('/rank/*', function (req, res, next) {
+app.get('/*', function (req, res, next) {
     let competition = {
-        'china':'',
-        'english':'?competition=8',
-        'dermany':'?competition=9',
-        'spain':'?competition=7'
+        'china': '',
+        'chinasub': '?competition=148',
+        'english': '?competition=8',
+        'dermany': '?competition=9',
+        'spain': '?competition=7',
+        'italy': '?competition=13'
     };
     let key = req.params['0'];
-    superagent.get(`http://www.dongqiudi.com/data${competition[key]}`)
+    let team = key.split('/')[1];
+    let type = key.split('/')[0];
+    console.log(`http://www.dongqiudi.com/data${competition[team]}&type=${type === 'mvp' ? 'goal_rank' : 'team_rank'}`)
+    superagent.get(`http://www.dongqiudi.com/data${competition[team]}&type=${type === 'mvp' ? 'goal_rank' : 'team_rank'}`)
         .set('Content-Type', 'application/json')
         .end(function (err, sres) {
             // 常规的错误处理
@@ -29,12 +34,14 @@ app.get('/rank/*', function (req, res, next) {
             }
             var $ = cheerio.load(sres.text);
             var items = [];
-            $('#stat_detail .team').each(function (index, element) {
+            $('#stat_detail tr').each(function (index, element) {
                 var $element = $(element);
                 items.push({
-                    title: escaper.unescape(removeHTMLTag($element.html())),
-                    img: $element.find('img').attr('src'),
-                    rank: index
+                    team: escaper.unescape(removeHTMLTag($element.find('.team').html())),
+                    rank: escaper.unescape(removeHTMLTag($element.find('.rank').html())),
+                    mvp: escaper.unescape(removeHTMLTag($element.find('.player').html())),
+                    stat: escaper.unescape(removeHTMLTag($element.find('.stat').html())),
+                    img: $element.find('img').attr('src')
                 });
             });
             items.splice(0, 1);
