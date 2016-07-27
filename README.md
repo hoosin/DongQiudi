@@ -1,41 +1,41 @@
 # footballAPI
 
 ## 排名
-[中超](http://104.148.38.125:3000/rank/china)
+[中超](http://api.javascript.mom/rank/china)
 
-[中甲](http://104.148.38.125:3000/rank/chinasub)
+[中甲](http://api.javascript.mom/rank/chinasub)
 
-[英超](http://104.148.38.125:3000/rank/english)
+[英超](http://api.javascript.mom/rank/english)
 
-[德甲](http://104.148.38.125:3000/rank/dermany)
+[德甲](http://api.javascript.mom/rank/dermany)
 
-[西甲](http://104.148.38.125:3000/rank/spain)
+[西甲](http://api.javascript.mom/rank/spain)
 
-[意甲](http://104.148.38.125:3000/rank/italy)
+[意甲](http://api.javascript.mom/rank/italy)
 
 
 ## 射手榜
-[中超](http://104.148.38.125:3000/mvp/china)
+[中超](http://api.javascript.mom/mvp/china)
 
-[中甲](http://104.148.38.125:3000/mvp/chinasub)
+[中甲](http://api.javascript.mom/mvp/chinasub)
 
-[英超](http://104.148.38.125:3000/mvp/english)
+[英超](http://api.javascript.mom/mvp/english)
 
-[德甲](http://104.148.38.125:3000/mvp/dermany)
+[德甲](http://api.javascript.mom/mvp/dermany)
 
-[西甲](http://104.148.38.125:3000/mvp/spain)
+[西甲](http://api.javascript.mom/mvp/spain)
 
-[意甲](http://104.148.38.125:3000/mvp/italy)
+[意甲](http://api.javascript.mom/mvp/italy)
 
 ## 助攻
-[中超](http://104.148.38.125:3000/attack/china)
+[中超](http://api.javascript.mom/attack/china)
 
-[中甲](http://104.148.38.125:3000/attack/chinasub)
+[中甲](http://api.javascript.mom/attack/chinasub)
 
-[英超](http://104.148.38.125:3000/attack/english)
+[英超](http://api.javascript.mom/attack/english)
 
-[德甲](http://104.148.38.125:3000/attack/dermany)
+[德甲](http://api.javascript.mom/attack/dermany)
 
-[西甲](http://104.148.38.125:3000/attack/spain)
+[西甲](http://api.javascript.mom/attack/spain)
 
-[意甲](http://104.148.38.125:3000/attack/italy)
+[意甲](http://api.javascript.mom/attack/italy)
