@@ -8,40 +8,65 @@
   <link rel="stylesheet" type="text/css" href="http://typo.sofi.sh/typo.css">
   <title>懂球帝数据爬虫接口 V1.0.2 </title>
   <style>
-    h3{margin-top:20px;} ul{padding-left:5px;}
-    .container {width: 90%;max-width: 1000px;padding: 30px 10px;margin: 0 auto;}
+    h3 {
+      margin-top: 20px;
+    }
+
+    ul {
+      padding-left: 5px;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1000px;
+      padding: 30px 10px;
+      margin: 0 auto;
+    }
+
+    .item{
+      float: left;
+      width: 33.33333333%;
+    }
   </style>
 </head>
 <body>
 <div class="container" id="doc">
   <h2>懂球帝数据爬虫接口 V1.0.2 </h2><br/>
-  <h3>联赛排行</h3>
-  <ul>
-    <li><a href="./rank/china">中超</a></li>
-    <li><a href="./rank/chinasub">中甲</a></li>
-    <li><a href="./rank/english">英超</a></li>
-    <li><a href="./rank/dermany">德甲</a></li>
-    <li><a href="./rank/spain">西甲</a></li>
-    <li><a href="./rank/italy">意甲</a></li>
-  </ul>
-  <h3>射手榜</h3>
-  <ul>
-    <li><a href="./mvp/china">中超</a></li>
-    <li><a href="./mvp/chinasub">中甲</a></li>
-    <li><a href="./mvp/english">英超</a></li>
-    <li><a href="./mvp/dermany">德甲</a></li>
-    <li><a href="./mvp/spain">西甲</a></li>
-    <li><a href="./mvp/italy">意甲</a></li>
-  </ul>
-  <h3>助攻榜</h3>
-  <ul>
-    <li><a href="./attack/china">中超</a></li>
-    <li><a href="./attack/chinasub">中甲</a></li>
-    <li><a href="./attack/english">英超</a></li>
-    <li><a href="./attack/dermany">德甲</a></li>
-    <li><a href="./attack/spain">西甲</a></li>
-    <li><a href="./attack/italy">意甲</a></li>
-  </ul>
+  <ol>
+    <li class="item">
+      <h3>联赛排行</h3>
+      <ul>
+        <li><a href="./rank/china">中超</a></li>
+        <li><a href="./rank/chinasub">中甲</a></li>
+        <li><a href="./rank/english">英超</a></li>
+        <li><a href="./rank/dermany">德甲</a></li>
+        <li><a href="./rank/spain">西甲</a></li>
+        <li><a href="./rank/italy">意甲</a></li>
+      </ul>
+    </li>
+    <li class="item">
+      <h3>射手榜</h3>
+      <ul>
+        <li><a href="./mvp/china">中超</a></li>
+        <li><a href="./mvp/chinasub">中甲</a></li>
+        <li><a href="./mvp/english">英超</a></li>
+        <li><a href="./mvp/dermany">德甲</a></li>
+        <li><a href="./mvp/spain">西甲</a></li>
+        <li><a href="./mvp/italy">意甲</a></li>
+      </ul>
+    </li>
+    <li class="item">
+      <h3>助攻榜</h3>
+      <ul>
+        <li><a href="./attack/china">中超</a></li>
+        <li><a href="./attack/chinasub">中甲</a></li>
+        <li><a href="./attack/english">英超</a></li>
+        <li><a href="./attack/dermany">德甲</a></li>
+        <li><a href="./attack/spain">西甲</a></li>
+        <li><a href="./attack/italy">意甲</a></li>
+      </ul>
+    </li>
+  </ol>
 </div>
 </body>
 </html>
