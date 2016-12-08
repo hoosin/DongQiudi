@@ -1,6 +1,6 @@
 'use strict'
 
-//引入依赖
+//依赖
 const express = require('express')
 const cheerio = require('cheerio')
 const superagent = require('superagent')
@@ -13,11 +13,13 @@ const removeHTMLTag = (str) => {
 }
 
 app.get('/', (req, res) => {
-  res.sendfile('./doc.html');
+  res.sendfile('./doc.html')
 })
 
 
 app.get('/*', (req, res, next) => {
+
+  //目标数据 competition 的值
   let competition = {
     'china': 51,
     'chinasub': 148,
@@ -26,6 +28,14 @@ app.get('/*', (req, res, next) => {
     'spain': 7,
     'italy': 13
   }
+
+  //目标数据页面ID
+  let htmlHook = {
+    'rank': '#stat_detail tr .team',
+    'mvp': '#stat_detail tr',
+    'attack': '#stat_detail tr'
+  }
+
   let key = req.params['0']
   let team = key.split('/')[1]
   let type = key.split('/')[0]
@@ -39,51 +49,59 @@ app.get('/*', (req, res, next) => {
       let $ = cheerio.load(sres.text)
       let items = []
       console.log(type)
-      switch (type) {
-        case 'rank':
-          $('#stat_detail tr .team').each((index, element) => {
-            let $element = $(element)
-            items.push({
-              team: escaper.unescape(removeHTMLTag($element.html())),
-              img: $element.find('img').attr('src'),
-              rank: index
+
+      let crawler = (elm) => {
+        return new Promise((resolve, reject) => {
+          if (elm) {
+            $(elm).each((index, element) => {
+              let elm = $(element)
+              switch (type) {
+                case 'rank':
+                  items.push({
+                    team: escaper.unescape(removeHTMLTag(elm.html())),
+                    img: elm.find('img').attr('src'),
+                    rank: index
+                  })
+                  break
+                case 'mvp':
+                  items.push({
+                    team: escaper.unescape(removeHTMLTag(elm.find('.team').html())),
+                    rank: escaper.unescape(removeHTMLTag(elm.find('.rank').html())),
+                    mvp: escaper.unescape(removeHTMLTag(elm.find('.player').html())),
+                    stat: escaper.unescape(removeHTMLTag(elm.find('.stat').html())),
+                    img: elm.find('img').attr('src')
+                  })
+                  break
+                case 'attack':
+                  items.push({
+                    team: escaper.unescape(removeHTMLTag(elm.find('.team').html())),
+                    rank: escaper.unescape(removeHTMLTag(elm.find('.rank').html())),
+                    mvp: escaper.unescape(removeHTMLTag(elm.find('.player').html())),
+                    stat: escaper.unescape(removeHTMLTag(elm.find('.stat').html())),
+                    img: elm.find('img').attr('src')
+                  })
+                  break
+                default:
+                  console.error('一个神奇的错误')
+              }
+              resolve(items)
             })
-          })
-          break
-        case 'mvp':
-          $('#stat_detail tr').each((index, element) => {
-            let $element = $(element)
-            items.push({
-              team: escaper.unescape(removeHTMLTag($element.find('.team').html())),
-              rank: escaper.unescape(removeHTMLTag($element.find('.rank').html())),
-              mvp: escaper.unescape(removeHTMLTag($element.find('.player').html())),
-              stat: escaper.unescape(removeHTMLTag($element.find('.stat').html())),
-              img: $element.find('img').attr('src')
-            })
-          })
-          break
-        case 'attack':
-          $('#stat_detail tr').each((index, element) => {
-            let $element = $(element)
-            items.push({
-              team: escaper.unescape(removeHTMLTag($element.find('.team').html())),
-              rank: escaper.unescape(removeHTMLTag($element.find('.rank').html())),
-              mvp: escaper.unescape(removeHTMLTag($element.find('.player').html())),
-              stat: escaper.unescape(removeHTMLTag($element.find('.stat').html())),
-              img: $element.find('img').attr('src')
-            })
-          })
-          break
-        default:
-          console.error('一个神奇的错误')
+          } else {
+            reject('ERR MSG')
+          }
+        })
       }
 
-      items.splice(0, 1)
-      if (items.toString() !== '') {
-        res.status(200).json({code: 200, data: items})
-      } else {
-        res.status(200).json({error: '没有数据'})
-      }
+      crawler(htmlHook[type]).then((data) => {
+        data.splice(0, 1)
+        if (data.toString() !== '') {
+          res.status(200).json({code: 200, data: data})
+        } else {
+          res.status(200).json({error: '没有数据'})
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
     })
 })
 
