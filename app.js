@@ -25,7 +25,9 @@ app.get('/*', (req, res, next) => {
     'english': 8,
     'dermany': 9,
     'spain': 7,
-    'italy': 13
+    'italy': 13,
+    'french':16,
+    'uefa':10 //欧冠
   }
 
   //目标数据页面ID
