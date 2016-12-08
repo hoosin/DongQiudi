@@ -16,7 +16,6 @@ app.get('/', (req, res) => {
   res.sendfile('./doc.html')
 })
 
-
 app.get('/*', (req, res, next) => {
 
   //目标数据 competition 的值
@@ -39,7 +38,10 @@ app.get('/*', (req, res, next) => {
   let key = req.params['0']
   let team = key.split('/')[1]
   let type = key.split('/')[0]
-  let _type = (type === 'mvp') ? 'goal_rank' : (type === 'rank') ? 'team_rank' : (type === 'attack') ? 'assist_rank' : ''
+  let _type = (type === 'mvp') ? 'goal_rank' :
+    (type === 'rank') ? 'team_rank' :
+      (type === 'attack') ? 'assist_rank' : ''
+
   console.info(`http://www.dongqiudi.com/data?competition=${competition[team]}&type=${_type}`)
   superagent.get(`http://www.dongqiudi.com/data?competition=${competition[team]}&type=${_type}`)
     .set('Content-Type', 'application/json')
