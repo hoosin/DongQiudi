@@ -5,6 +5,7 @@ const express = require('express')
 const cheerio = require('cheerio')
 const superagent = require('superagent')
 const escaper = require('true-html-escape')
+const opn = require('opn')
 const app = express()
 
 const removeHTMLTag = (str) => {
@@ -111,5 +112,6 @@ app.get('/*', (req, res, next) => {
 
 
 app.listen(10000, (req, res) => {
+  opn('http://localhost:10000')
   console.log('app is running at port 10000')
 })
