@@ -112,6 +112,5 @@ app.get('/*', (req, res, next) => {
 
 
 app.listen(10000, (req, res) => {
-  opn('http://localhost:10000')
-  console.log('app is running at port 10000')
+  console.log('app is running at port 8080')
 })
