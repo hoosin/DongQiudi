@@ -1,56 +1,84 @@
 <!DOCTYPE html>
-<html>
+<html lang="ch">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
   <meta content="telephone=no" name="format-detection"/>
-  <title></title>
+  <link rel="stylesheet" type="text/css" href="http://typo.sofi.sh/typo.css">
+  <title>懂球帝数据爬虫接口 V1.0.2 </title>
+  <style>
+    h3 {
+      margin-top: 20px;
+    }
+
+    #logo {
+      padding: 0 10px 30px;
+      font-size: 40px;
+      font-weight: 900;
+      font-family: serif;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1000px;
+      padding: 30px 10px;
+      margin: 0 auto;
+    }
+
+    .item{
+      float: left;
+      width: 33.33333333%;
+    }
+
+
+  </style>
 </head>
 <body>
+<div class="container" id="doc">
+  <h2 id="logo">懂球帝数据爬虫接口 V1.0.2 </h2>
+  <div class="github">Repo: <a href="https://github.com/hoosin/Dong-Qiudi">https://github.com/hoosin/Dong-Qiudi</a></div>
 
-<div id="testjump">test</div>
-<br>
-<div id="jump">jump</div>
-
-
-<script type="text/javascript">
-
-  document.getElementById('testjump').onclick=function () {
-    testjump('//baidu.com')
-  }
-
-  document.getElementById('jump').onclick=function () {
-    jump('//baidu.com')
-  }
-
-
-
-
-  function testjump(url){
-    var a = document.createElement('a');
-    var content = document.createTextNode("a link navgation fro VH");
-    a.appendChild(content);
-    a.style.display = 'none';
-    a.href = url;
-    document.body.appendChild(a);
-    var event = new Event('click', { bubbles: true });
-    a.dispatchEvent(event);
-    document.body.removeChild(a);
-  }
-
-  function jump(url) {
-    var eleA = document.createElement('a');
-    var event = document.createEvent('MouseEvents');
-    document.body.appendChild(eleA);
-    event.initEvent('click',true,true);
-    eleA.href = url;
-    eleA.dispatchEvent(event);
-    document.body.removeChild(eleA);
-  }
-
-
-
-</script>
+  <ol class="typo">
+    <li class="item">
+      <h3>排行</h3>
+      <ul>
+        <li><a href="./rank/china">中超</a></li>
+        <li><a href="./rank/chinasub">中甲</a></li>
+        <li><a href="./rank/english">英超</a></li>
+        <li><a href="./rank/dermany">德甲</a></li>
+        <li><a href="./rank/spain">西甲</a></li>
+        <li><a href="./rank/italy">意甲</a></li>
+        <li><a href="./rank/french">法甲</a></li>
+      </ul>
+    </li>
+    <li class="item">
+      <h3>射手榜</h3>
+      <ul>
+        <li><a href="./mvp/china">中超</a></li>
+        <li><a href="./mvp/chinasub">中甲</a></li>
+        <li><a href="./mvp/english">英超</a></li>
+        <li><a href="./mvp/dermany">德甲</a></li>
+        <li><a href="./mvp/spain">西甲</a></li>
+        <li><a href="./mvp/italy">意甲</a></li>
+        <li><a href="./mvp/french">法甲</a></li>
+        <li><a href="./mvp/uefa">欧冠</a></li>
+      </ul>
+    </li>
+    <li class="item">
+      <h3>助攻榜</h3>
+      <ul>
+        <li><a href="./attack/china">中超</a></li>
+        <li><a href="./attack/chinasub">中甲</a></li>
+        <li><a href="./attack/english">英超</a></li>
+        <li><a href="./attack/dermany">德甲</a></li>
+        <li><a href="./attack/spain">西甲</a></li>
+        <li><a href="./attack/italy">意甲</a></li>
+        <li><a href="./attack/french">法甲</a></li>
+        <li><a href="./attack/uefa">欧冠</a></li>
+      </ul>
+    </li>
+  </ol>
+</div>
 </body>
 </html>
