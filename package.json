@@ -6,15 +6,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node app.js",
-    "pm2":"pm2 start app.js"
+    "pm2": "pm2 start app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cheerio": "^0.20.0",
+    "cheerio": "^1.0.0-rc.2",
     "express": "^4.14.0",
-    "superagent": "^2.1.0",
-    "true-html-escape": "^0.0.2",
-    "opn": "^4.0.2"
+    "superagent": "^3.8.3",
+    "true-html-escape": "^1.0.0"
   }
 }
