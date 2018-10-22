@@ -1,11 +1,10 @@
 'use strict'
 
 //依赖
-const express = require('express')
-const cheerio = require('cheerio')
-const superagent = require('superagent')
-const escaper = require('true-html-escape')
-const opn = require('opn')
+const express = require('express') // 著名的 nodejs 框架
+const cheerio = require('cheerio') // 为服务器特别定制的，快速、灵活、实施的 jQuery 核心实现.
+const superagent = require('superagent') // nodejs 里一个非常方便的客户端请求代理模块
+const escaper = require('true-html-escape') // Unicode
 const app = express()
 
 const removeHTMLTag = (str) => {
@@ -27,8 +26,8 @@ app.get('/*', (req, res, next) => {
     'dermany': 9,
     'spain': 7,
     'italy': 13,
-    'french':16,
-    'uefa':10 //欧冠
+    'french': 16,
+    'uefa': 10 //欧冠
   }
 
   //目标数据页面ID
@@ -39,22 +38,29 @@ app.get('/*', (req, res, next) => {
   }
 
   let key = req.params['0']
+  console.log(key)
   let team = key.split('/')[1]
   let type = key.split('/')[0]
   let _type = (type === 'mvp') ? 'goal_rank' :
     (type === 'rank') ? 'team_rank' :
       (type === 'attack') ? 'assist_rank' : ''
 
-  console.info(`http://www.dongqiudi.com/data?competition=${competition[team]}&type=${_type}`)
   superagent.get(`http://www.dongqiudi.com/data?competition=${competition[team]}&type=${_type}`)
     .set('Content-Type', 'application/json')
-    .end((err, sres) => {
+    .end((err, _res) => {
       // 常规的错误处理
       if (err) return next(err)
-      let $ = cheerio.load(sres.text)
-      let items = []
-      console.log(type)
+      let $ = cheerio.load(_res.text)
 
+      // const cheerio = require('cheerio');
+      // const $ = cheerio.load('<h2 class="title">Hello world</h2>');
+      // $('h2.title').text('Hello there!');
+      // $('h2').addClass('welcome');
+      // $.html();
+      //=> <h2 class="title welcome">Hello there!</h2>
+
+
+      let items = []
       let crawler = (elm) => {
         return new Promise((resolve, reject) => {
           if (elm) {
@@ -62,6 +68,11 @@ app.get('/*', (req, res, next) => {
               let elm = $(element)
               switch (type) {
                 case 'rank':
+                  // const escaper = require("true-html-escape");
+                  // escaper.escape("¤¥€");                                                  ///<= &curren;&yen;&euro; 
+                  // escaper.unescape("&lt;span&gt;&#29579;&#23612;&#29595;&lt;/span&gt;");  ///<= <span>王尼玛</span> 
+                  // escaper.unescape("&#12501;&#12521;&#12531;&#12489;&#12540;&#12523;");   ///<= フランドール 
+                  // escaper.unescape("(&#x256d;&#xffe3;3&#xffe3;)&#x256d;&#x2661;")         ///<= (╭￣3￣)╭♡ 
                   items.push({
                     team: escaper.unescape(removeHTMLTag(elm.html())),
                     img: elm.find('img').attr('src'),
@@ -100,9 +111,9 @@ app.get('/*', (req, res, next) => {
       crawler(htmlHook[type]).then((data) => {
         data.splice(0, 1)
         if (data.toString() !== '') {
-          res.status(200).json({code: 200, data: data})
+          res.status(200).json({ code: 200, data: data })
         } else {
-          res.status(200).json({error: '没有数据'})
+          res.status(200).json({ error: '没有数据' })
         }
       }).catch((err) => {
         console.log(err)
